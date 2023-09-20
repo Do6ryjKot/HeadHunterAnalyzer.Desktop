@@ -1,0 +1,11 @@
+﻿<ResourceDictionary 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:viewModels="clr-namespace:HeadHunterAnalyzer.Desktop.ViewModels"
+	xmlns:views="clr-namespace:HeadHunterAnalyzer.Desktop.Views">
+
+	<DataTemplate DataType="{x:Type viewModels:MainPageViewModel}">
+		<views:MainPageView />
+	</DataTemplate>
+	
+</ResourceDictionary>
