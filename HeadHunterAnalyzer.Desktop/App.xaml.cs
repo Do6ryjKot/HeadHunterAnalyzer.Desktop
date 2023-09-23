@@ -47,8 +47,11 @@ namespace HeadHunterAnalyzer.Desktop {
 
 				services.ConfigureLoggerService();
 
+				services.ConfigureHttpClients();
+
 				services.ConfigureLocalStores();
 				services.ConfigureLocalServices();
+				services.ConfigureExternalServices();
 				services.ConfigureViewModels();
 				services.ConfigureNavigationServices();
 

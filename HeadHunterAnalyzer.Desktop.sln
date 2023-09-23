@@ -5,9 +5,13 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterAnalyzer.Desktop", "HeadHunterAnalyzer.Desktop\HeadHunterAnalyzer.Desktop.csproj", "{5A81F78E-0A74-480B-A902-50321264DD97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{C393EA74-BEC3-45F4-A374-5D6281A33438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{C393EA74-BEC3-45F4-A374-5D6281A33438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{4D2AFB0D-F32D-492B-870D-E4314411C443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{4D2AFB0D-F32D-492B-870D-E4314411C443}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{AACFAD82-5EE1-4116-94FD-849A75CF0BF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterAnalyzer.API", "HeadHunterAnalyzer.API\HeadHunterAnalyzer.API.csproj", "{F0629435-9632-471D-81D0-2CA79ADE4CD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACFAD82-5EE1-4116-94FD-849A75CF0BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACFAD82-5EE1-4116-94FD-849A75CF0BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACFAD82-5EE1-4116-94FD-849A75CF0BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACFAD82-5EE1-4116-94FD-849A75CF0BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0629435-9632-471D-81D0-2CA79ADE4CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0629435-9632-471D-81D0-2CA79ADE4CD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0629435-9632-471D-81D0-2CA79ADE4CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0629435-9632-471D-81D0-2CA79ADE4CD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

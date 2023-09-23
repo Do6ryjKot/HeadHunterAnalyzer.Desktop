@@ -7,6 +7,94 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
-		<TextBlock Text="MainPage" />
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20" />
+			<RowDefinition Height="40" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="20" />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<!-- Панель ввода ид вакансии -->
+		<StackPanel 
+			Orientation="Horizontal"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Bottom"
+			Height="25"
+			Grid.Row="1"
+			Grid.Column="1">
+
+			<TextBlock 
+				Text="Ид вакансии:" 
+				Margin="10 0"
+				VerticalAlignment="Center" />
+
+			<TextBox Width="250" />
+
+			<Button
+				Margin="5 0"
+				Content="Открыть"
+				Padding="10 0" />
+
+		</StackPanel>
+
+		<!-- Список слов -->
+		<ListBox
+			Grid.Row="2"
+			Grid.Column="1"
+			Margin="5"
+			Width="665"
+			ItemsSource="{Binding Words}"
+			ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+			ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+			
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Height="50" Width="150">
+						<Grid.RowDefinitions>
+							<RowDefinition />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+
+						<TextBlock 
+							Text="{Binding Value}"
+							TextTrimming="CharacterEllipsis"
+							Grid.Row="0" />
+
+						<StackPanel 
+							Orientation="Horizontal"
+							Grid.Row="1">
+
+							<TextBlock Text="Число вхождений: " />
+							<TextBlock 
+								Text="{Binding Occurrences}"
+								Grid.Row="1" />
+						</StackPanel>
+						
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+			
+		</ListBox>
+
+		<TextBlock 
+			Text="{Binding Message}"
+			Grid.Column="1"
+			Grid.Row="3"
+			TextWrapping="Wrap"
+			Visibility="{Binding HasMessage, 
+				Converter={StaticResource booleanToVisibilityConverter}}" />
 	</Grid>
 </UserControl>
