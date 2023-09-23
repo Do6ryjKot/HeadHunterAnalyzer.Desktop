@@ -1,12 +1,21 @@
-﻿using HeadHunterAnalyzer.Desktop.Services.Navigation;
+﻿using Contracts.Logger;
+using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using HeadHunterAnalyzer.Desktop.Stores.Navigation;
 using HeadHunterAnalyzer.Desktop.ViewModels;
+using LoggerService;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 	
     public static class ServiceExtensions {
+
+		/// <summary>
+		/// Добавление логгера в пулл сервисов.
+		/// </summary>
+		/// <param name="services"></param>
+		public static void ConfigureLoggerService(this IServiceCollection services) =>
+			services.AddSingleton<ILoggerManager, LoggerManager>();
 
 		/// <summary>
 		/// Настройка моделей представления.

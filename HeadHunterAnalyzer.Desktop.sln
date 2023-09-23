@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeadHunterAnalyzer.Desktop", "HeadHunterAnalyzer.Desktop\HeadHunterAnalyzer.Desktop.csproj", "{5A81F78E-0A74-480B-A902-50321264DD97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadHunterAnalyzer.Desktop", "HeadHunterAnalyzer.Desktop\HeadHunterAnalyzer.Desktop.csproj", "{5A81F78E-0A74-480B-A902-50321264DD97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{C393EA74-BEC3-45F4-A374-5D6281A33438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{4D2AFB0D-F32D-492B-870D-E4314411C443}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{5A81F78E-0A74-480B-A902-50321264DD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A81F78E-0A74-480B-A902-50321264DD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A81F78E-0A74-480B-A902-50321264DD97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C393EA74-BEC3-45F4-A374-5D6281A33438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C393EA74-BEC3-45F4-A374-5D6281A33438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C393EA74-BEC3-45F4-A374-5D6281A33438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C393EA74-BEC3-45F4-A374-5D6281A33438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D2AFB0D-F32D-492B-870D-E4314411C443}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

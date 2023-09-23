@@ -3,6 +3,9 @@ using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using HeadHunterAnalyzer.Desktop.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
+using System;
+using System.IO;
 using System.Windows;
 
 namespace HeadHunterAnalyzer.Desktop {
@@ -12,6 +15,8 @@ namespace HeadHunterAnalyzer.Desktop {
 		private readonly IHost _host;
 
 		public App() {
+
+			LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 			_host = CreateHostBuilder().Build();
 		}
@@ -39,6 +44,8 @@ namespace HeadHunterAnalyzer.Desktop {
 
 		private IHostBuilder CreateHostBuilder() =>
 			Host.CreateDefaultBuilder().ConfigureServices((context, services) => {
+
+				services.ConfigureLoggerService();
 
 				services.ConfigureLocalStores();
 				services.ConfigureLocalServices();
