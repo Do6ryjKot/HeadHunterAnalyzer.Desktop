@@ -26,6 +26,7 @@ namespace HeadHunterAnalyzer.Desktop {
 			_host.Start();
 
 			_host.Services.GetRequiredService<INavigationManager>()
+			//	.AnalyzeVacancyNavigationService.Navigate();
 				.MainPageNavigationService.Navigate();
 
 			Window window = _host.Services.GetRequiredService<MainWindow>();

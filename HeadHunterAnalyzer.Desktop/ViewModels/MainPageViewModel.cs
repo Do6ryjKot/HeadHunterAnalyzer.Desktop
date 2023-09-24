@@ -1,6 +1,8 @@
 ﻿using Contracts.HeadHunterAnalyzer;
 using Entities.DataTransferObjects;
 using HeadHunterAnalyzer.Desktop.Commands.Async.MainPage;
+using HeadHunterAnalyzer.Desktop.Commands.Sync.Navigation;
+using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -45,11 +47,16 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 		public bool HasMessage => !string.IsNullOrEmpty(Message);
 
 
+		public ICommand AnalyzeVacancyNavigationCommand { get; }
 
-		public MainPageViewModel(IHeadHunterAnalyzerService analyzerService) {
+
+		public MainPageViewModel(IHeadHunterAnalyzerService analyzerService, 
+			INavigationService<AnalyzeVacancyViewModel> analyzeVacancyNavigationService) {
 
 			_analyzerService = analyzerService;
 			_loadWordsCommand = new LoadWordsCommand(OnException, this, analyzerService);
+
+			AnalyzeVacancyNavigationCommand = new NavigationCommand<AnalyzeVacancyViewModel>(analyzeVacancyNavigationService);
 
 			_loadWordsCommand.Execute(null);
 		}

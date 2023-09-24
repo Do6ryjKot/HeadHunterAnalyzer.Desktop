@@ -27,9 +27,25 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 
 			services.AddTransient<MainWindowViewModel>();
 			services.AddTransient<MainPageViewModel>();
+			services.AddTransient<AnalyzeVacancyViewModel>();
 
 			services.AddSingleton<Func<MainPageViewModel>>(s => 
 				() => s.GetRequiredService<MainPageViewModel>());
+			
+			services.AddSingleton<Func<AnalyzeVacancyViewModel>>(s => 
+				() => s.GetRequiredService<AnalyzeVacancyViewModel>());
+		}
+
+		/// <summary>
+		/// Сервисы навигации между страницами.
+		/// </summary>
+		/// <param name="services"></param>
+		public static void ConfigureNavigationServices(this IServiceCollection services) {
+
+			services.AddSingleton<INavigationService<MainPageViewModel>, NavigationService<MainPageViewModel>>();
+			services.AddSingleton<INavigationService<AnalyzeVacancyViewModel>, NavigationService<AnalyzeVacancyViewModel>>();
+
+			services.AddSingleton<INavigationManager, NavigationManager>();
 		}
 
 		/// <summary>
@@ -54,18 +70,7 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 		public static void ConfigureExternalServices(this IServiceCollection services) {
 
 			services.AddSingleton<IHeadHunterAnalyzerService, HeadHunterAnalyzerApiService>();
-		}
-
-		/// <summary>
-		/// Сервисы навигации между страницами.
-		/// </summary>
-		/// <param name="services"></param>
-		public static void ConfigureNavigationServices(this IServiceCollection services) {
-
-			services.AddSingleton<INavigationService<MainPageViewModel>, NavigationService<MainPageViewModel>>();
-			
-			services.AddSingleton<INavigationManager, NavigationManager>();
-		}
+		}		
 
 		public static void ConfigureHttpClients(this IServiceCollection services) {
 

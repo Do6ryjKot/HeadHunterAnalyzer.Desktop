@@ -40,7 +40,8 @@
 			<Button
 				Margin="5 0"
 				Content="Открыть"
-				Padding="10 0" />
+				Padding="10 0"
+				Command="{Binding AnalyzeVacancyNavigationCommand}"/>
 
 		</StackPanel>
 

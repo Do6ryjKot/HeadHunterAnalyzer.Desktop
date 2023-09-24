@@ -7,5 +7,9 @@
 	<DataTemplate DataType="{x:Type viewModels:MainPageViewModel}">
 		<views:MainPageView />
 	</DataTemplate>
+
+	<DataTemplate DataType="{x:Type viewModels:AnalyzeVacancyViewModel}">
+		<views:AnalyzeVacancyView />
+	</DataTemplate>
 	
 </ResourceDictionary>
