@@ -35,7 +35,9 @@
 				Margin="10 0"
 				VerticalAlignment="Center" />
 
-			<TextBox Width="250" />
+			<TextBox 
+				Width="250" 
+				Text="{Binding HeadHunterId}" />
 
 			<Button
 				Margin="5 0"

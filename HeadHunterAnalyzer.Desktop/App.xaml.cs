@@ -46,6 +46,8 @@ namespace HeadHunterAnalyzer.Desktop {
 		private IHostBuilder CreateHostBuilder() =>
 			Host.CreateDefaultBuilder().ConfigureServices((context, services) => {
 
+				services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 				services.ConfigureLoggerService();
 
 				services.ConfigureHttpClients();

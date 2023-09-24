@@ -24,5 +24,10 @@ namespace HeadHunterAnalyzer.API {
 
 			return await GetAsync<IEnumerable<WordStatisticsDto>>("api/words");
 		}
+
+		public async Task<AnalyzedVacancyDto?> AnalyzeVacancy(int headHunterId) {
+
+			return await GetAsync<AnalyzedVacancyDto>($"api/vacancies/{headHunterId}");
+		}
 	}
 }

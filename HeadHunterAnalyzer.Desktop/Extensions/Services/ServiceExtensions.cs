@@ -2,6 +2,7 @@
 using Contracts.Logger;
 using HeadHunterAnalyzer.API;
 using HeadHunterAnalyzer.Desktop.Services.Navigation;
+using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
 using HeadHunterAnalyzer.Desktop.Stores.Navigation;
 using HeadHunterAnalyzer.Desktop.ViewModels;
 using LoggerService;
@@ -55,6 +56,7 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 		public static void ConfigureLocalStores(this IServiceCollection services) {
 
 			services.AddSingleton<INavigationStore, NavigationStore>();
+			services.AddSingleton<IAnalyzedVacancyStore, AnalyzedVacancyStore>();
 		}
 
 		/// <summary>

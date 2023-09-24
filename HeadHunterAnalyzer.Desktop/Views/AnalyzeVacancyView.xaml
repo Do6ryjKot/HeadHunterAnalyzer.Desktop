@@ -21,19 +21,33 @@
 		</Grid.ColumnDefinitions>
 
 		<!-- Кнопка возврата -->
-		<Button 
-			Content="&lt;"
+		<StackPanel 
 			Grid.Column="1"
-			Width="30"
-			Margin="5 3" 
-			HorizontalAlignment="Left"
-			Command="{Binding MainPageNavigationCommand}" />
+			Orientation="Horizontal">
+			
+			<Button 
+				Content="&lt;"
+				Grid.Column="1"
+				Width="30"
+				Margin="5 3" 
+				HorizontalAlignment="Left"
+				Command="{Binding MainPageNavigationCommand}" />
+
+			<TextBlock
+				Text="{Binding VacancyName}"/>
+
+			<TextBlock
+				Text="{Binding VacancyExperience}"/>
+		</StackPanel>
+		
 
 		<!-- Содержимое вакансии-->
 		<TextBlock
 			Grid.Column="1"
-			Grid.Row="1" 
-			Margin="5" />
+			Grid.Row="1"
+			Margin="5"
+			TextWrapping="Wrap"
+			Text="{Binding VacancyBody}" />
 
 		<!-- Панель рекомендуемых ключевых слов -->
 		<Grid

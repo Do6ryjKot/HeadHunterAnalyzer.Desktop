@@ -1,4 +1,5 @@
 ﻿using Entities.DataTransferObjects;
+using Entities.Models;
 
 namespace Contracts.HeadHunterAnalyzer {
 	
@@ -8,5 +9,7 @@ namespace Contracts.HeadHunterAnalyzer {
 	public interface IHeadHunterAnalyzerService {
 
 		public Task<IEnumerable<WordStatisticsDto>> GetAllWords();
+
+		public Task<AnalyzedVacancy> AnalyzeVacancy(int headHunterId);
 	}
 }

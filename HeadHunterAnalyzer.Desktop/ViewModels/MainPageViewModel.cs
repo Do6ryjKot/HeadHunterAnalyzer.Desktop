@@ -1,8 +1,8 @@
 ﻿using Contracts.HeadHunterAnalyzer;
 using Entities.DataTransferObjects;
 using HeadHunterAnalyzer.Desktop.Commands.Async.MainPage;
-using HeadHunterAnalyzer.Desktop.Commands.Sync.Navigation;
 using HeadHunterAnalyzer.Desktop.Services.Navigation;
+using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -12,6 +12,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 	public class MainPageViewModel : ViewModelBase {
 
 		private readonly IHeadHunterAnalyzerService _analyzerService;
+		private readonly IAnalyzedVacancyStore _vacancyStore;
 
 		private readonly ICommand _loadWordsCommand;
 
@@ -47,18 +48,30 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 		public bool HasMessage => !string.IsNullOrEmpty(Message);
 
 
+		private int? _headHunterId;
+		public int? HeadHunterId {
+
+			get => _headHunterId; 
+			
+			set => _headHunterId = value;
+		}
+
+
+
 		public ICommand AnalyzeVacancyNavigationCommand { get; }
 
 
-		public MainPageViewModel(IHeadHunterAnalyzerService analyzerService, 
-			INavigationService<AnalyzeVacancyViewModel> analyzeVacancyNavigationService) {
+		public MainPageViewModel(IHeadHunterAnalyzerService analyzerService,
+				INavigationManager navigationManager,
+				IAnalyzedVacancyStore vacancyStore) {
 
 			_analyzerService = analyzerService;
 			_loadWordsCommand = new LoadWordsCommand(OnException, this, analyzerService);
 
-			AnalyzeVacancyNavigationCommand = new NavigationCommand<AnalyzeVacancyViewModel>(analyzeVacancyNavigationService);
+			AnalyzeVacancyNavigationCommand = new AnalyzeVacancyNavigationCommand(OnException, this, navigationManager, vacancyStore);
 
 			_loadWordsCommand.Execute(null);
+			_vacancyStore = vacancyStore;
 		}
 
 		private void OnException(Exception exception) {
