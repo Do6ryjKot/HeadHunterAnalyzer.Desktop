@@ -46,6 +46,8 @@ namespace HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy {
 			HeadHunterId = headHunterId;
 
 			_vacancyData = await _hhService.AnalyzeVacancy(HeadHunterId);
+
+			OnVacancyLoaded?.Invoke();
 		}
 	}
 }

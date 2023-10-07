@@ -13,7 +13,8 @@
 			<RowDefinition Height="30" />
 			<RowDefinition />
 			<RowDefinition Height="auto"/>
-			<RowDefinition Height="50"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
 			<RowDefinition Height="10" />
 		</Grid.RowDefinitions>
 
@@ -82,7 +83,9 @@
 		<!-- Панель ввода ключевых слов -->
 		<Grid
 			Grid.Column="1"
-			Grid.Row="3">
+			Grid.Row="3"
+			Height="50"
+			Visibility="{Binding VacancyCanBeSaved, Converter={StaticResource booleanToVisibilityConverter}}">
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
@@ -98,8 +101,15 @@
 				Content="&gt;"
 				Grid.Column="1"
 				Command="{Binding SendVacancyCommand}" />
+			
+			
 
 		</Grid>
 
+		<TextBlock 
+			Grid.Column="1"
+			Grid.Row="4" 
+			Visibility="{Binding HasMessage, Converter={StaticResource booleanToVisibilityConverter}}"
+			Text="{Binding Message}" />
 	</Grid>
 </UserControl>

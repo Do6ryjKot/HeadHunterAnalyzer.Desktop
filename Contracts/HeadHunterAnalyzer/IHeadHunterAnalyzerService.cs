@@ -11,5 +11,7 @@ namespace Contracts.HeadHunterAnalyzer {
 		public Task<IEnumerable<WordStatisticsDto>> GetAllWords();
 
 		public Task<AnalyzedVacancy> AnalyzeVacancy(int headHunterId);
+
+		public Task<string> SaveAnalyzedVacancy(int headHunterId, IEnumerable<Word> words);
 	}
 }

@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Async\AnalyzeVacancy\" />
     <Folder Include="Commands\Sync\MainPage\" />
   </ItemGroup>
 

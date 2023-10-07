@@ -1,5 +1,6 @@
 ﻿using Entities.DataTransferObjects;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
 
 namespace HeadHunterAnalyzer.API {
 	
@@ -11,9 +12,21 @@ namespace HeadHunterAnalyzer.API {
 			_client = client;
 		}
 
-		private async Task<T?> GetAsync<T>(string uri) {
+		public async Task<T?> PostAsync<T>(string uri, JsonContent content) {
+
+			var response = await _client.PostAsync(uri, content);
+
+			return await DeserializeResponse<T>(response);
+		}
+
+		public async Task<T?> GetAsync<T>(string uri) {
 
 			var response = await _client.GetAsync(uri);
+
+			return await DeserializeResponse<T>(response);
+		}
+
+		private async Task<T?> DeserializeResponse<T>(HttpResponseMessage response) {
 
 			if (!response.IsSuccessStatusCode)
 				throw new Exception("Произошла ошибка при обращении к API HeadHunterAnalyzer");
@@ -21,16 +34,6 @@ namespace HeadHunterAnalyzer.API {
 			string json = await response.Content.ReadAsStringAsync();
 
 			return JsonConvert.DeserializeObject<T>(json);
-		}
-
-		public async Task<IEnumerable<WordStatisticsDto>?> GetAllWords() {
-
-			return await GetAsync<IEnumerable<WordStatisticsDto>>("api/words");
-		}
-
-		public async Task<AnalyzedVacancyDto?> AnalyzeVacancy(int headHunterId) {
-
-			return await GetAsync<AnalyzedVacancyDto>($"api/vacancies/{headHunterId}");
 		}
 	}
 }

@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace HeadHunterAnalyzer.Desktop.ViewModels.Components.KeyWords {
 	
-	public class RecommendedKeyWordViewModel {
+	public class RecommendedKeyWordViewModel : ViewModelBase {
 
 		private readonly Word _word;
 

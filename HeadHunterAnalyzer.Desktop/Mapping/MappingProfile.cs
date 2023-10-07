@@ -16,6 +16,7 @@ namespace HeadHunterAnalyzer.Desktop.Mapping {
 			CreateMap<AnalyzedCompanyDto, AnalyzedCompany>();
 
 			CreateMap<WordDto, Word>();
+			CreateMap<Word, WordForCreationDto>();
 		}
     }
 }

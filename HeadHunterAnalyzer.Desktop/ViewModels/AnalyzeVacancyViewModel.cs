@@ -1,10 +1,13 @@
-﻿using Entities.Models;
+﻿using Contracts.HeadHunterAnalyzer;
+using Entities.Models;
+using HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzeVacancy;
 using HeadHunterAnalyzer.Desktop.Commands.Sync.Navigation;
 using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using HeadHunterAnalyzer.Desktop.Services.Parser;
 using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
 using HeadHunterAnalyzer.Desktop.ViewModels.Components.KeyWords;
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace HeadHunterAnalyzer.Desktop.ViewModels {
@@ -13,7 +16,8 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 
 		private readonly IAnalyzedVacancyStore _vacancyStore;
 		private readonly IKeyWordsParser _keyWordsParser;
-
+		
+		#region Vacancy
 
 		public int HeadHunterId => _vacancyStore.HeadHunterId;
 		public string VacancyName => _vacancyStore.VacancyName;
@@ -22,35 +26,67 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 		public int CompanyHeadHunterId => _vacancyStore.Company.HeadHunterId;
 		public string CompanyName => _vacancyStore.Company.Name;
 
-		public List<RecommendedKeyWordViewModel> RecommendedKeyWords { get; }
+		public bool VacancyCanBeSaved => !_vacancyStore.AlreadyAnalyzed;
+
+		#endregion
+
+		#region KeyWords
+
+		public ObservableCollection<RecommendedKeyWordViewModel> RecommendedKeyWords { get; }
 
 
 		private string _keyWords = "";
 		public string KeyWords {
 			get => _keyWords;
-			set { 			
+			set {
 				_keyWords = value;
 				OnPropertyChanged(nameof(KeyWords));
 			}
 		}
 
+		#endregion
+
+		#region Message
+
+		private string _message;
+		public string Message {
+
+			get => _message;
+
+			set {
+				_message = value;
+				OnPropertyChanged(nameof(Message));
+				OnPropertyChanged(nameof(HasMessage));
+			}
+		}
+		public bool HasMessage => !string.IsNullOrEmpty(Message);
+
+		#endregion
 
 		public ICommand MainPageNavigationCommand { get; }
+		public ICommand SendVacancyCommand { get; }
 
 		public AnalyzeVacancyViewModel(INavigationService<MainPageViewModel> mainPageNavigationService, 
 				IAnalyzedVacancyStore vacancyStore, 
-				IKeyWordsParser keyWordsParser) {
+				IKeyWordsParser keyWordsParser,
+				IHeadHunterAnalyzerService hhService) {
 
 			_keyWordsParser = keyWordsParser;
 
 			MainPageNavigationCommand = new NavigationCommand<MainPageViewModel>(mainPageNavigationService);
+			SendVacancyCommand = new SendVacancyCommand(OnSendException, this, hhService, keyWordsParser, vacancyStore);
 
-			RecommendedKeyWords = new List<RecommendedKeyWordViewModel>();
+			RecommendedKeyWords = new ObservableCollection<RecommendedKeyWordViewModel>();
 
 			_vacancyStore = vacancyStore;
 
 			_vacancyStore.OnVacancyLoaded += VacancyLoaded;
 			UpdateKeyWordList();
+		}
+
+		private void OnSendException(Exception exception) {
+
+			Message = exception.Message;
 		}
 
 		private void VacancyLoaded() {
@@ -64,6 +100,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 			OnPropertyChanged(nameof(CompanyHeadHunterId));
 			OnPropertyChanged(nameof(CompanyName));
 			OnPropertyChanged(nameof(RecommendedKeyWords));
+			OnPropertyChanged(nameof(VacancyCanBeSaved));
 		}
 
 		private void UpdateKeyWordList() {

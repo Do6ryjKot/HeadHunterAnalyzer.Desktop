@@ -3,6 +3,7 @@ using Contracts.HeadHunterAnalyzer;
 using Contracts.Logger;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using System.Net.Http.Json;
 
 namespace HeadHunterAnalyzer.API {
 
@@ -20,7 +21,7 @@ namespace HeadHunterAnalyzer.API {
 
 		public async Task<IEnumerable<WordStatisticsDto>> GetAllWords() {
 			
-			var result = await _client.GetAllWords();
+			var result = await _client.GetAsync<IEnumerable<WordStatisticsDto>>("api/words");
 
 			if (result == null) {
 
@@ -32,7 +33,7 @@ namespace HeadHunterAnalyzer.API {
 
 		public async Task<AnalyzedVacancy> AnalyzeVacancy(int headHunterId) {
 
-			var dto = await _client.AnalyzeVacancy(headHunterId);
+			var dto = await _client.GetAsync<AnalyzedVacancyDto>($"api/vacancies/{headHunterId}");
 
 			if (dto == null) {
 
@@ -43,6 +44,25 @@ namespace HeadHunterAnalyzer.API {
 			var result = _mapper.Map<AnalyzedVacancy>(dto);
 
 			return result;
+		}
+	
+		public async Task<string> SaveAnalyzedVacancy(int headHunterId, IEnumerable<Word> words) {
+
+			VacancyForCreationDto vacancy = new VacancyForCreationDto {
+
+				HeadHunterId = headHunterId,
+				Words = _mapper.Map<IEnumerable<WordForCreationDto>>(words)
+			};
+
+			var result = await _client.PostAsync<ResultDetails>("api/vacancies", JsonContent.Create(vacancy));
+
+			if (result == null) {
+
+				_logger.LogWarning($"Got null result on posting new vacancy {headHunterId}, [ {words} ]");
+				return "Получен пустой результат.";
+			}
+
+			return result.Message;
 		}
 	}
 }
