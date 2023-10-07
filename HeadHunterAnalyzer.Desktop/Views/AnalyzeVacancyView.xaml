@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HeadHunterAnalyzer.Desktop.Views"
+             xmlns:behaviors="clr-namespace:HeadHunterAnalyzer.Desktop.Views.Behaviors"
+			 xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="30" />
 			<RowDefinition />
+			<RowDefinition Height="auto"/>
 			<RowDefinition Height="50"/>
 			<RowDefinition Height="10" />
 		</Grid.RowDefinitions>
@@ -23,6 +26,7 @@
 		<!-- Кнопка возврата -->
 		<StackPanel 
 			Grid.Column="1"
+			Grid.Row="0"
 			Orientation="Horizontal">
 			
 			<Button 
@@ -33,73 +37,52 @@
 				HorizontalAlignment="Left"
 				Command="{Binding MainPageNavigationCommand}" />
 
-			<TextBlock
-				Text="{Binding VacancyName}"/>
-
-			<TextBlock
-				Text="{Binding VacancyExperience}"/>
+			<TextBlock VerticalAlignment="Center">
+				<Run Text="{Binding VacancyName, Mode=OneWay}" />
+				<Run Text=" / " />
+				<Run Text="{Binding VacancyExperience, Mode=OneWay}" />
+			</TextBlock>
+			
 		</StackPanel>
-		
 
 		<!-- Содержимое вакансии-->
-		<TextBlock
+		<WebBrowser
 			Grid.Column="1"
 			Grid.Row="1"
-			Margin="5"
-			TextWrapping="Wrap"
-			Text="{Binding VacancyBody}" />
-
+			behaviors:BrowserBehavior.Html="{Binding VacancyBody}" />
+		
+		
 		<!-- Панель рекомендуемых ключевых слов -->
-		<Grid
+		<ListBox
 			Grid.Column="1"
-			Grid.Row="1">
+			Grid.Row="2"
+			Height="50"
+			ItemsSource="{Binding RecommendedKeyWords}"
+			ScrollViewer.VerticalScrollBarVisibility="Disabled"
+			ScrollViewer.HorizontalScrollBarVisibility="Visible">
 
-			<Grid.RowDefinitions>
-				<RowDefinition />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel />
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
 
-			<Button 
-				Grid.Row="1"
-				Height="20"
-				Width="20"
-				Content="^"
-				VerticalAlignment="Bottom" />
-
-			<ListBox
-				Grid.Row="2"
-				Height="50"
-				ItemsSource="{Binding RecommendedKeyWords}"
-				Margin="4 0"
-				ScrollViewer.VerticalScrollBarVisibility="Disabled"
-				ScrollViewer.HorizontalScrollBarVisibility="Visible">
-
-				<ListBox.ItemsPanel>
-					<ItemsPanelTemplate>
-						<WrapPanel />
-					</ItemsPanelTemplate>
-				</ListBox.ItemsPanel>
-				
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<Grid>
-							<Button 
-								Content="{Binding Value}"
-								Padding="5 2"
-								Command="{Binding AddKeyWordCommand}" />
-						</Grid>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
-			
-		</Grid>
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid>
+						<Button 
+							Content="{Binding WordValue}"
+							Padding="5 2"
+							Command="{Binding AddKeyWordCommand}" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 
 		<!-- Панель ввода ключевых слов -->
 		<Grid
 			Grid.Column="1"
-			Grid.Row="2" 
-			Margin="2">
+			Grid.Row="3">
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
@@ -108,13 +91,12 @@
 			
 			<TextBox
 				Grid.Column="0"
-				Margin="2 0"
 				TextWrapping="Wrap"
 				Text="{Binding KeyWords}" />
 
 			<Button
+				Content="&gt;"
 				Grid.Column="1"
-				Margin="2 0"
 				Command="{Binding SendVacancyCommand}" />
 
 		</Grid>

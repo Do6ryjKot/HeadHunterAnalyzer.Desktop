@@ -2,6 +2,7 @@
 using Contracts.Logger;
 using HeadHunterAnalyzer.API;
 using HeadHunterAnalyzer.Desktop.Services.Navigation;
+using HeadHunterAnalyzer.Desktop.Services.Parser;
 using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
 using HeadHunterAnalyzer.Desktop.Stores.Navigation;
 using HeadHunterAnalyzer.Desktop.ViewModels;
@@ -63,7 +64,10 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 		/// Настройка локальных сервисов.
 		/// </summary>
 		/// <param name="services"></param>
-		public static void ConfigureLocalServices(this IServiceCollection services) { }
+		public static void ConfigureLocalServices(this IServiceCollection services) {
+
+			services.AddSingleton<IKeyWordsParser, KeyWordsParser>();
+		}
 
 		/// <summary>
 		/// Настройка внешних сервисов.

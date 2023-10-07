@@ -15,6 +15,9 @@ namespace HeadHunterAnalyzer.API {
 
 			var response = await _client.GetAsync(uri);
 
+			if (!response.IsSuccessStatusCode)
+				throw new Exception("Произошла ошибка при обращении к API HeadHunterAnalyzer");
+
 			string json = await response.Content.ReadAsStringAsync();
 
 			return JsonConvert.DeserializeObject<T>(json);
