@@ -17,7 +17,7 @@
 
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="680" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
@@ -52,7 +52,6 @@
 			Grid.Row="2"
 			Grid.Column="1"
 			Margin="5"
-			Width="665"
 			ItemsSource="{Binding Words}"
 			ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 			ScrollViewer.VerticalScrollBarVisibility="Visible">
