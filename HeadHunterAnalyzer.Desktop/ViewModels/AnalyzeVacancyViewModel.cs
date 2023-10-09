@@ -1,6 +1,7 @@
 ﻿using Contracts.HeadHunterAnalyzer;
 using Entities.Models;
 using HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzeVacancy;
+using HeadHunterAnalyzer.Desktop.Commands.Sync.AnalyzeVacancy;
 using HeadHunterAnalyzer.Desktop.Commands.Sync.Navigation;
 using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using HeadHunterAnalyzer.Desktop.Services.Parser;
@@ -65,6 +66,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 
 		public ICommand MainPageNavigationCommand { get; }
 		public ICommand SendVacancyCommand { get; }
+		public ICommand AddAllRecommendedKeyWords { get; }
 
 		public AnalyzeVacancyViewModel(INavigationService<MainPageViewModel> mainPageNavigationService, 
 				IAnalyzedVacancyStore vacancyStore, 
@@ -75,6 +77,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 
 			MainPageNavigationCommand = new NavigationCommand<MainPageViewModel>(mainPageNavigationService);
 			SendVacancyCommand = new SendVacancyCommand(OnSendException, this, hhService, keyWordsParser, vacancyStore);
+			AddAllRecommendedKeyWords = new AddAllRecommendedKeyWords(vacancyStore, this, keyWordsParser);
 
 			RecommendedKeyWords = new ObservableCollection<RecommendedKeyWordViewModel>();
 

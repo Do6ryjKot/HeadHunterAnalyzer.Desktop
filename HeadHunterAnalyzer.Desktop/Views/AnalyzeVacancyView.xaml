@@ -54,38 +54,58 @@
 		
 		
 		<!-- Панель рекомендуемых ключевых слов -->
-		<ListBox
+		<Grid
 			Grid.Column="1"
 			Grid.Row="2"
-			Height="50"
-			ItemsSource="{Binding RecommendedKeyWords}"
-			ScrollViewer.VerticalScrollBarVisibility="Disabled"
-			ScrollViewer.HorizontalScrollBarVisibility="Visible">
+			Height="50">
 
-			<ListBox.ItemsPanel>
-				<ItemsPanelTemplate>
-					<WrapPanel />
-				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition Width="auto" />
+			</Grid.ColumnDefinitions>
+			
+			<ListBox
+				Grid.Column="0"
+				ItemsSource="{Binding RecommendedKeyWords}"
+				ScrollViewer.VerticalScrollBarVisibility="Disabled"
+				ScrollViewer.HorizontalScrollBarVisibility="Visible">
 
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<Grid>
-						<Button 
-							Content="{Binding WordValue}"
-							Padding="5 2"
-							Command="{Binding AddKeyWordCommand}" />
-					</Grid>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
+				<ListBox.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel />
+					</ItemsPanelTemplate>
+				</ListBox.ItemsPanel>
+
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid>
+							<Button 
+								Content="{Binding WordValue}"
+								Padding="5 2"
+								Command="{Binding AddKeyWordCommand}" />
+						</Grid>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+			<Button 
+				Grid.Column="1" 
+				Width="50"
+				Content="Все"
+				Command="{Binding AddAllRecommendedKeyWords}"
+				Visibility="{Binding VacancyCanBeSaved, 
+					Converter={StaticResource booleanToVisibilityConverter}}" />
+			
+		</Grid>
+		
 
 		<!-- Панель ввода ключевых слов -->
 		<Grid
 			Grid.Column="1"
 			Grid.Row="3"
 			Height="50"
-			Visibility="{Binding VacancyCanBeSaved, Converter={StaticResource booleanToVisibilityConverter}}">
+			Visibility="{Binding VacancyCanBeSaved, 
+				Converter={StaticResource booleanToVisibilityConverter}}">
 
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition />
@@ -101,8 +121,6 @@
 				Content="&gt;"
 				Grid.Column="1"
 				Command="{Binding SendVacancyCommand}" />
-			
-			
 
 		</Grid>
 
