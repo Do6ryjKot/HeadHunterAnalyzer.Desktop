@@ -1,21 +1,59 @@
-﻿using Entities.DataTransferObjects;
+﻿using Contracts.HeadHunterAnalyzer;
+using Entities.DataTransferObjects;
+using HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies;
+using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace HeadHunterAnalyzer.Desktop.ViewModels {
 	
 	public class AnalyzedVacanciesViewModel : ViewModelBase {
 
-		public List<VacancyDto> Vacancies { get; set; }
+		private readonly ICommand _loadVacanciesCommand;
 
-		public AnalyzedVacanciesViewModel() {
 
-			Vacancies = new List<VacancyDto> {
+		private List<VacancyDto> _vacancies;
+		public List<VacancyDto> Vacancies {
 
-				new VacancyDto { Name = "1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-				new VacancyDto { Name = "2 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-				new VacancyDto { Name = "3 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-				new VacancyDto { Name = "4 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."},
-			};
+			get => _vacancies;
+
+			set { 
+
+				_vacancies = value; 
+				OnPropertyChanged(nameof(Vacancies));
+			}
+		}
+
+
+		#region Message
+
+		private string _message;
+		public string Message {
+
+			get => _message;
+
+			set {
+
+				_message = value;
+				OnPropertyChanged(nameof(Message));
+				OnPropertyChanged(nameof(HasMessage));
+			}
+		}
+
+		public bool HasMessage => !string.IsNullOrEmpty(Message);
+
+		#endregion
+
+		public AnalyzedVacanciesViewModel(IHeadHunterAnalyzerService hhService) {
+
+			_loadVacanciesCommand = new LoadVacanciesCommand(OnException, this, hhService);
+
+			_loadVacanciesCommand.Execute(null);
+		}
+
+		private void OnException(Exception exception) {
+			
+			Message = exception.Message;
 		}
 	}
 }

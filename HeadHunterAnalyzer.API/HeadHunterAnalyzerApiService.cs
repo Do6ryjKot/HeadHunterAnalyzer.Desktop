@@ -64,5 +64,18 @@ namespace HeadHunterAnalyzer.API {
 
 			return result.Message;
 		}
+	
+		public async Task<IEnumerable<VacancyDto>> GetAnalyzedVacancies(int pageNumber, int pageSize) {
+
+			var result = await _client.GetAsync<IEnumerable<VacancyDto>>($"api/vacancies?pageNumber={pageNumber}&pageSize={pageSize}");
+
+			if (result == null) {
+
+				_logger.LogWarning($"{typeof(HeadHunterAnalyzerApiService)}" +
+					$".{nameof(GetAnalyzedVacancies)} got null vacancies collection. PageNumber: {pageNumber}, PageSize: {pageSize}.");
+			}
+
+			return result ?? new List<VacancyDto>();
+		}
 	}
 }
