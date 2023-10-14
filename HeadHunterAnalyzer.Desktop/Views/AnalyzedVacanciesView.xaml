@@ -7,6 +7,40 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
-		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Placeholder" />
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition Height="auto" />
+		</Grid.RowDefinitions>
+
+		<ListBox
+			Grid.Row="0"
+			Margin="5"
+			ItemsSource="{Binding Vacancies}"
+			ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+			ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Grid Height="auto">
+
+						<TextBlock
+							MinHeight="50"
+							Height="auto"
+							Margin="5"
+							TextWrapping="Wrap"
+							Text="{Binding Name}" />
+
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+
+		</ListBox>
+
+		<TextBlock 
+			Text="{Binding Message}"
+			Grid.Row="1"
+			TextWrapping="Wrap"
+			Visibility="{Binding HasMessage, 
+				Converter={StaticResource booleanToVisibilityConverter}}" />
 	</Grid>
 </UserControl>
