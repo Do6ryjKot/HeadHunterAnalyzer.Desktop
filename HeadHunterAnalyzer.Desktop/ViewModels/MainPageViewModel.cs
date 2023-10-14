@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace HeadHunterAnalyzer.Desktop.ViewModels {
-    
+
+	[Obsolete]
 	public class MainPageViewModel : ViewModelBase {
 
 		private readonly IHeadHunterAnalyzerService _analyzerService;

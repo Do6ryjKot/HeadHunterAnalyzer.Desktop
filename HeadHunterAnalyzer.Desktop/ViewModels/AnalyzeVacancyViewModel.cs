@@ -68,14 +68,14 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 		public ICommand SendVacancyCommand { get; }
 		public ICommand AddAllRecommendedKeyWords { get; }
 
-		public AnalyzeVacancyViewModel(INavigationService<MainPageViewModel> mainPageNavigationService, 
+		public AnalyzeVacancyViewModel(INavigationService<AnalyzedWordsViewModel> mainPageNavigationService, 
 				IAnalyzedVacancyStore vacancyStore, 
 				IKeyWordsParser keyWordsParser,
 				IHeadHunterAnalyzerService hhService) {
 
 			_keyWordsParser = keyWordsParser;
 
-			MainPageNavigationCommand = new NavigationCommand<MainPageViewModel>(mainPageNavigationService);
+			MainPageNavigationCommand = new NavigationCommand<AnalyzedWordsViewModel>(mainPageNavigationService);
 			SendVacancyCommand = new SendVacancyCommand(OnSendException, this, hhService, keyWordsParser, vacancyStore);
 			AddAllRecommendedKeyWords = new AddAllRecommendedKeyWords(vacancyStore, this, keyWordsParser);
 

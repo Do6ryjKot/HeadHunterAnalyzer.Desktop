@@ -1,24 +1,22 @@
 ﻿using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
-using HeadHunterAnalyzer.Desktop.ViewModels;
+using HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage;
 using System;
 using System.Threading.Tasks;
 
-namespace HeadHunterAnalyzer.Desktop.Commands.Async.MainPage {
+namespace HeadHunterAnalyzer.Desktop.Commands.Async.MainPageNavigationLayout {
 
-	[Obsolete]
 	public class AnalyzeVacancyNavigationCommand : AsyncCommandBase {
 
-		private readonly MainPageViewModel _viewModel;
+		private readonly MainPageNavigationLayoutViewModel _viewModel;
 		private readonly INavigationManager _navigationManager;
 		private readonly IAnalyzedVacancyStore _vacancyStore;
 
-		public AnalyzeVacancyNavigationCommand(Action<Exception> OnException, 
-				MainPageViewModel viewModel, INavigationManager navigationManager, IAnalyzedVacancyStore vacancyStore) : base(OnException) {
-
+		public AnalyzeVacancyNavigationCommand(Action<Exception> onException, MainPageNavigationLayoutViewModel viewModel, 
+				INavigationManager navigationManager, IAnalyzedVacancyStore vacancyStore) : base(onException) {
+			_viewModel = viewModel;
 			_navigationManager = navigationManager;
 			_vacancyStore = vacancyStore;
-			_viewModel = viewModel;
 		}
 
 		public async override Task ExecuteAsync(object? parameter) {

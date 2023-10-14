@@ -4,17 +4,16 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HeadHunterAnalyzer.Desktop.Commands.Async.MainPage {
+namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedWords {
 
-	[Obsolete]
 	public class LoadWordsCommand : AsyncCommandBase {
 
-		private readonly MainPageViewModel _viewModel;
+		private readonly AnalyzedWordsViewModel _viewModel;
 		private readonly IHeadHunterAnalyzerService _hhService;
 
-		public LoadWordsCommand(Action<Exception> onException, MainPageViewModel viewModel, 
+		public LoadWordsCommand(Action<Exception> onException, AnalyzedWordsViewModel viewModel,
 			IHeadHunterAnalyzerService hhService) : base(onException) {
-			
+
 			_hhService = hhService;
 			_viewModel = viewModel;
 		}

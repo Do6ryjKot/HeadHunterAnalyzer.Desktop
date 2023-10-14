@@ -29,18 +29,23 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 		public static void ConfigureViewModels(this IServiceCollection services) {
 
 			services.AddTransient<MainWindowViewModel>();
-			services.AddTransient<MainPageViewModel>();
+			// services.AddTransient<MainPageViewModel>();
+			services.AddTransient<AnalyzedWordsViewModel>();
 			services.AddTransient<AnalyzeVacancyViewModel>();
 			services.AddTransient<MainPageNavigationLayoutViewModel>();
+			services.AddTransient<MainPageNavigationLayoutViewModel>();
 
-			services.AddSingleton<Func<MainPageViewModel>>(s => 
-				() => s.GetRequiredService<MainPageViewModel>());
+			// services.AddSingleton<Func<MainPageViewModel>>(s => 
+			//	() => s.GetRequiredService<MainPageViewModel>());
 			
 			services.AddSingleton<Func<AnalyzeVacancyViewModel>>(s => 
 				() => s.GetRequiredService<AnalyzeVacancyViewModel>());
 
 			services.AddSingleton<Func<MainPageNavigationLayoutViewModel>>(s =>
 				() => s.GetRequiredService<MainPageNavigationLayoutViewModel>());
+
+			services.AddSingleton<Func<AnalyzedWordsViewModel>>(s =>
+				() => s.GetRequiredService<AnalyzedWordsViewModel>());
 		}
 
 		/// <summary>
@@ -51,8 +56,8 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 
 			// services.AddSingleton<INavigationService<MainPageViewModel>, NavigationService<MainPageViewModel>>();
 			services.AddSingleton<INavigationService<AnalyzeVacancyViewModel>, NavigationService<AnalyzeVacancyViewModel>>();
-			services.AddSingleton<INavigationService<MainPageViewModel>, 
-				LayoutNavigationService<MainPageViewModel, MainPageNavigationLayoutViewModel>>();
+			services.AddSingleton<INavigationService<AnalyzedWordsViewModel>, 
+				LayoutNavigationService<AnalyzedWordsViewModel, MainPageNavigationLayoutViewModel>>();
 
 			services.AddSingleton<INavigationManager, NavigationManager>();
 		}

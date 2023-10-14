@@ -19,4 +19,8 @@
 		<navigationLayout:MainPageNavigationLayout />
 	</DataTemplate>
 
+	<DataTemplate DataType="{x:Type viewModels:AnalyzedWordsViewModel}">
+		<views:AnalyzedWordsView />
+	</DataTemplate>
+
 </ResourceDictionary>
