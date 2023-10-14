@@ -8,20 +8,7 @@ using System.Windows.Input;
 namespace HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage {
 	
 	public class MainPageNavigationLayoutViewModel : LayoutViewModelBase {
-
-		private NavigationBarViewModel _navigatioBarViewModel;
-
-		public NavigationBarViewModel NavigationBarViewModel {
-			
-			get => _navigatioBarViewModel;
-
-			set { 
-			
-				_navigatioBarViewModel = value;
-				OnPropertyChanged(nameof(NavigationBarViewModel));
-			}
-		}
-
+		
 		private int? _headHunterId;
 		public int? HeadHunterId {
 
@@ -30,10 +17,15 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage {
 			set => _headHunterId = value;
 		}
 
+		public NavigationBarViewModel NavigationBarViewModel { get; private set; }
+
 		public ICommand AnalyzeVacancyNavigationCommand { get; }
-		public MainPageNavigationLayoutViewModel(INavigationManager navigationManager, IAnalyzedVacancyStore vacancyStore) {
+		public MainPageNavigationLayoutViewModel(INavigationManager navigationManager, 
+				IAnalyzedVacancyStore vacancyStore,
+				Func<NavigationBarViewModel> createNavigationBarViewModel) {
 
 			AnalyzeVacancyNavigationCommand = new AnalyzeVacancyNavigationCommand(OnException, this, navigationManager, vacancyStore);
+			NavigationBarViewModel = createNavigationBarViewModel();
 		}
 
 		private void OnException(Exception exception) {

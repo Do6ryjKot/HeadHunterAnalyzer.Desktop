@@ -7,10 +7,6 @@
 	xmlns:navigationLayoutViewModel="clr-namespace:HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage"
 	xmlns:navigationLayout="clr-namespace:HeadHunterAnalyzer.Desktop.Views.Layouts">
 
-	<DataTemplate DataType="{x:Type viewModels:MainPageViewModel}">
-		<views:MainPageView />
-	</DataTemplate>
-
 	<DataTemplate DataType="{x:Type viewModels:AnalyzeVacancyViewModel}">
 		<views:AnalyzeVacancyView />
 	</DataTemplate>
@@ -21,6 +17,10 @@
 
 	<DataTemplate DataType="{x:Type viewModels:AnalyzedWordsViewModel}">
 		<views:AnalyzedWordsView />
+	</DataTemplate>
+
+	<DataTemplate DataType="{x:Type viewModels:AnalyzedVacanciesViewModel}">
+		<views:AnalyzedVacanciesView />
 	</DataTemplate>
 
 </ResourceDictionary>
