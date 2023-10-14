@@ -6,6 +6,7 @@ using HeadHunterAnalyzer.Desktop.Services.Parser;
 using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
 using HeadHunterAnalyzer.Desktop.Stores.Navigation;
 using HeadHunterAnalyzer.Desktop.ViewModels;
+using HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage;
 using LoggerService;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -30,12 +31,16 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 			services.AddTransient<MainWindowViewModel>();
 			services.AddTransient<MainPageViewModel>();
 			services.AddTransient<AnalyzeVacancyViewModel>();
+			services.AddTransient<MainPageNavigationLayoutViewModel>();
 
 			services.AddSingleton<Func<MainPageViewModel>>(s => 
 				() => s.GetRequiredService<MainPageViewModel>());
 			
 			services.AddSingleton<Func<AnalyzeVacancyViewModel>>(s => 
 				() => s.GetRequiredService<AnalyzeVacancyViewModel>());
+
+			services.AddSingleton<Func<MainPageNavigationLayoutViewModel>>(s =>
+				() => s.GetRequiredService<MainPageNavigationLayoutViewModel>());
 		}
 
 		/// <summary>
@@ -44,8 +49,10 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 		/// <param name="services"></param>
 		public static void ConfigureNavigationServices(this IServiceCollection services) {
 
-			services.AddSingleton<INavigationService<MainPageViewModel>, NavigationService<MainPageViewModel>>();
+			// services.AddSingleton<INavigationService<MainPageViewModel>, NavigationService<MainPageViewModel>>();
 			services.AddSingleton<INavigationService<AnalyzeVacancyViewModel>, NavigationService<AnalyzeVacancyViewModel>>();
+			services.AddSingleton<INavigationService<MainPageViewModel>, 
+				LayoutNavigationService<MainPageViewModel, MainPageNavigationLayoutViewModel>>();
 
 			services.AddSingleton<INavigationManager, NavigationManager>();
 		}
