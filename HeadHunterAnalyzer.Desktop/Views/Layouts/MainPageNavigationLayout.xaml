@@ -49,6 +49,14 @@
 
 		</StackPanel>
 
+		<TextBlock 
+			Text="{Binding Message}"
+			Grid.Column="1"
+			Grid.Row="4"
+			TextWrapping="Wrap"
+			Visibility="{Binding HasMessage, 
+				Converter={StaticResource booleanToVisibilityConverter}}" />
+
 		<components:NavigationBar
 			Grid.Row="2"
 			Grid.Column="1"

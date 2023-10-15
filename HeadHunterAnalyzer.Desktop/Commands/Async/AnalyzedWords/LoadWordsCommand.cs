@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedWords {
 
+	/// <summary>
+	/// Команда загрузки слов на странице статистики по словам.
+	/// </summary>
 	public class LoadWordsCommand : AsyncCommandBase {
 
 		private readonly AnalyzedWordsViewModel _viewModel;

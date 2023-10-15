@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies {
 
+	/// <summary>
+	/// Команда загрузки вакансий на странице анализировнаных вакансий.
+	/// </summary>
 	public class LoadVacanciesCommand : AsyncCommandBase {
 
 		private readonly AnalyzedVacanciesViewModel _viewModel;

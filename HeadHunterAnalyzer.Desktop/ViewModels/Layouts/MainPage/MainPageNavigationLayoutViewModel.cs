@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage {
 	
+	/// <summary>
+	/// Лэйаут навигации на главной странице приложения.
+	/// </summary>
 	public class MainPageNavigationLayoutViewModel : LayoutViewModelBase {
 		
 		private int? _headHunterId;
@@ -17,7 +20,26 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage {
 			set => _headHunterId = value;
 		}
 
-		public NavigationBarViewModel NavigationBarViewModel { get; private set; }
+		public NavigationBarViewModel NavigationBarViewModel { get; }
+
+		#region Message
+
+		private string _message;
+		public string Message {
+
+			get => _message;
+
+			set {
+
+				_message = value;
+				OnPropertyChanged(nameof(Message));
+				OnPropertyChanged(nameof(HasMessage));
+			}
+		}
+
+		public bool HasMessage => !string.IsNullOrEmpty(Message);
+
+		#endregion
 
 		public ICommand AnalyzeVacancyNavigationCommand { get; }
 		public MainPageNavigationLayoutViewModel(INavigationManager navigationManager, 
@@ -28,8 +50,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage {
 			NavigationBarViewModel = createNavigationBarViewModel();
 		}
 
-		private void OnException(Exception exception) {
-			throw new NotImplementedException();
-		}
+		private void OnException(Exception exception) => 
+			Message = exception.Message;
 	}
 }

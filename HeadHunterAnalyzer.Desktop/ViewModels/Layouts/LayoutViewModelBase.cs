@@ -1,5 +1,8 @@
 ﻿namespace HeadHunterAnalyzer.Desktop.ViewModels.Layouts {
 	
+	/// <summary>
+	/// Базовый класс для лэйаутов.
+	/// </summary>
 	public class LayoutViewModelBase : ViewModelBase {
 
 		private ViewModelBase _currentViewModel;
