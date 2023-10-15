@@ -1,5 +1,6 @@
 ﻿using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.ResponseFeatures;
 
 namespace Contracts.HeadHunterAnalyzer {
 	
@@ -14,6 +15,6 @@ namespace Contracts.HeadHunterAnalyzer {
 
 		public Task<string> SaveAnalyzedVacancy(int headHunterId, IEnumerable<Word> words);
 
-		public Task<IEnumerable<VacancyDto>> GetAnalyzedVacancies(int pageNumber, int pageSize);
+		public Task<PagedList<Vacancy>> GetAnalyzedVacancies(int pageNumber, int pageSize);
 	}
 }

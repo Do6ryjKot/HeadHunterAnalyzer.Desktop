@@ -67,7 +67,7 @@ namespace HeadHunterAnalyzer.API {
 	
 		public async Task<IEnumerable<VacancyDto>> GetAnalyzedVacancies(int pageNumber, int pageSize) {
 
-			var result = await _client.GetAsync<IEnumerable<VacancyDto>>($"api/vacancies?pageNumber={pageNumber}&pageSize={pageSize}");
+			var result = await _client.GetAsync($"api/vacancies?pageNumber={pageNumber}&pageSize={pageSize}");
 
 			if (result == null) {
 
