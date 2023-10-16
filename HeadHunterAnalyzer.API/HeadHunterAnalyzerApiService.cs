@@ -3,6 +3,7 @@ using Contracts.HeadHunterAnalyzer;
 using Contracts.Logger;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.ResponseFeatures;
 using System.Net.Http.Json;
 
 namespace HeadHunterAnalyzer.API {
@@ -65,17 +66,21 @@ namespace HeadHunterAnalyzer.API {
 			return result.Message;
 		}
 	
-		public async Task<IEnumerable<VacancyDto>> GetAnalyzedVacancies(int pageNumber, int pageSize) {
+		public async Task<PagedList<Vacancy>> GetAnalyzedVacancies(int pageNumber, int pageSize) {
 
-			var result = await _client.GetAsync($"api/vacancies?pageNumber={pageNumber}&pageSize={pageSize}");
+			var vacanciesDto = await _client.GetPagedList<VacancyDto>($"api/vacancies?pageNumber={pageNumber}&pageSize={pageSize}");
 
-			if (result == null) {
+			if (vacanciesDto == null) {
 
-				_logger.LogWarning($"{typeof(HeadHunterAnalyzerApiService)}" +
+				_logger.LogError($"{typeof(HeadHunterAnalyzerApiService)}" +
 					$".{nameof(GetAnalyzedVacancies)} got null vacancies collection. PageNumber: {pageNumber}, PageSize: {pageSize}.");
+				
+				throw new Exception("Сервер вернул пустой ответ. Обратитесь к разработчику.");
 			}
 
-			return result ?? new List<VacancyDto>();
+			var vacancies = _mapper.Map<List<Vacancy>>(vacanciesDto.Items);
+
+			return PagedList<Vacancy>.ToPagedList(vacancies, vacanciesDto.Metadata);
 		}
 	}
 }

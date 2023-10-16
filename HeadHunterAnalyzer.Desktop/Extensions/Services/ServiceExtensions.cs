@@ -5,6 +5,7 @@ using HeadHunterAnalyzer.Desktop.Services.Navigation;
 using HeadHunterAnalyzer.Desktop.Services.Parser;
 using HeadHunterAnalyzer.Desktop.Stores.AnalyzedVacancy;
 using HeadHunterAnalyzer.Desktop.Stores.Navigation;
+using HeadHunterAnalyzer.Desktop.Stores.Vacancies;
 using HeadHunterAnalyzer.Desktop.ViewModels;
 using HeadHunterAnalyzer.Desktop.ViewModels.Components.Navigation;
 using HeadHunterAnalyzer.Desktop.ViewModels.Layouts.MainPage;
@@ -89,6 +90,7 @@ namespace HeadHunterAnalyzer.Desktop.Extensions.Services {
 
 			services.AddSingleton<INavigationStore, NavigationStore>();
 			services.AddSingleton<IAnalyzedVacancyStore, AnalyzedVacancyStore>();
+			services.AddSingleton<IVacanciesStore, VacanciesStore>();
 		}
 
 		/// <summary>

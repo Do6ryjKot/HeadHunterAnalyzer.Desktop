@@ -1,14 +1,16 @@
 ﻿namespace Entities.ResponseFeatures {
 
-	public class PagedList<T> : List<T> {
+	public class PagedList<T> {
 
 		public PaginationMetadata Metadata { get; set; }
+
+		public List<T> Items { get; private set; }
 
 		public PagedList(List<T> items, PaginationMetadata metadata) { 
 			
 			Metadata = metadata;
 
-			AddRange(items);
+			Items = items;
 		}
 
 		public static PagedList<T> ToPagedList(IEnumerable<T> source, PaginationMetadata metadata) =>

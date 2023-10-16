@@ -1,6 +1,6 @@
-﻿using Contracts.HeadHunterAnalyzer;
-using Entities.DataTransferObjects;
+﻿using Entities.Models;
 using HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies;
+using HeadHunterAnalyzer.Desktop.Stores.Vacancies;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -9,21 +9,29 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 	
 	public class AnalyzedVacanciesViewModel : ViewModelBase {
 
+		private readonly IVacanciesStore _vacanciesStore;
+
 		private readonly ICommand _loadVacanciesCommand;
 
+		public IEnumerable<Vacancy> Vacancies => _vacanciesStore.Items;
 
-		private List<VacancyDto> _vacancies;
-		public List<VacancyDto> Vacancies {
 
-			get => _vacancies;
+		#region Pagination
+
+		public bool HasNext => _vacanciesStore.HasNext;
+		public bool HasPrevious => _vacanciesStore.HasPrevious;
+
+		public int CurrentPage {
+
+			get => _vacanciesStore.PageNumber;
 
 			set { 
-
-				_vacancies = value; 
-				OnPropertyChanged(nameof(Vacancies));
+				
+				_loadVacanciesCommand.Execute(null);
 			}
 		}
 
+		#endregion
 
 		#region Message
 
@@ -44,11 +52,22 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 
 		#endregion
 
-		public AnalyzedVacanciesViewModel(IHeadHunterAnalyzerService hhService) {
+		public AnalyzedVacanciesViewModel(IVacanciesStore vacanciesStore) {
 
-			_loadVacanciesCommand = new LoadVacanciesCommand(OnException, this, hhService);
+			_vacanciesStore = vacanciesStore;
 
-			_loadVacanciesCommand.Execute(null);
+			_loadVacanciesCommand = new LoadVacanciesCommand(OnException, _vacanciesStore);
+
+			_vacanciesStore.ItemsLoaded += OnItemsLoaded;
+
+			_loadVacanciesCommand.Execute(null);			
+		}
+
+		private void OnItemsLoaded() {
+			
+			OnPropertyChanged(nameof(Vacancies));
+			OnPropertyChanged(nameof(HasNext));
+			OnPropertyChanged(nameof(HasPrevious));
 		}
 
 		private void OnException(Exception exception) {

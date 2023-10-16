@@ -1,7 +1,5 @@
-﻿using Contracts.HeadHunterAnalyzer;
-using HeadHunterAnalyzer.Desktop.ViewModels;
+﻿using HeadHunterAnalyzer.Desktop.Stores.Vacancies;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies {
@@ -11,14 +9,11 @@ namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies {
 	/// </summary>
 	public class LoadVacanciesCommand : AsyncCommandBase {
 
-		private readonly AnalyzedVacanciesViewModel _viewModel;
-		private readonly IHeadHunterAnalyzerService _hhService;
+		private readonly IVacanciesStore _vacanciesStore;
 
-		public LoadVacanciesCommand(Action<Exception> onException, AnalyzedVacanciesViewModel viewModel, 
-				IHeadHunterAnalyzerService hhService) : base(onException) {
+		public LoadVacanciesCommand(Action<Exception> onException, IVacanciesStore vacanciesStore) : base(onException) {
 
-			_viewModel = viewModel;
-			_hhService = hhService;
+			_vacanciesStore = vacanciesStore;
 		}
 
 		public override async Task ExecuteAsync(object? parameter) {
@@ -26,9 +21,7 @@ namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies {
 			int pageNumber = 1;
 			int pageSize = 10;
 
-			var vacancies = await _hhService.GetAnalyzedVacancies(pageNumber, pageSize);
-
-			_viewModel.Vacancies = vacancies.ToList();
+			await _vacanciesStore.Load(pageNumber, pageSize);
 		}
 	}
 }

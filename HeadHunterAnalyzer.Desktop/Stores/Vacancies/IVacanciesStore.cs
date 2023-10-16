@@ -1,6 +1,7 @@
 ﻿using Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HeadHunterAnalyzer.Desktop.Stores.Vacancies {
 
@@ -15,7 +16,7 @@ namespace HeadHunterAnalyzer.Desktop.Stores.Vacancies {
 
 		public IEnumerable<Vacancy> Items { get; }
 
-		public void Load(int pageNumber, int pageSize);
+		public Task Load(int pageNumber, int pageSize);
 
 		public event Action ItemsLoaded;
 	}

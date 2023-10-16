@@ -1,28 +1,43 @@
-﻿using Entities.Models;
+﻿using Contracts.HeadHunterAnalyzer;
+using Entities.Models;
+using Entities.ResponseFeatures;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HeadHunterAnalyzer.Desktop.Stores.Vacancies {
 
 	public class VacanciesStore : IVacanciesStore {
 
-		public int PageNumber { get; private set; }
+		private readonly IHeadHunterAnalyzerService _hhService;
 
-		public int PageSize { get; private set; }
+		private PagedList<Vacancy> _pagedVacancies = new(new List<Vacancy>(), new PaginationMetadata());
 
-		public bool HasPrevious { get; private set; }
+		#region Pagination
 
-		public bool HasNext { get; private set; }
+		public int PageNumber => _pagedVacancies.Metadata.CurrentPage;
 
-		public IEnumerable<Vacancy> Items { get; private set; }
+		public int PageSize => _pagedVacancies.Metadata.PageSize;
+
+		public bool HasPrevious => _pagedVacancies.Metadata.HasPrevious;
+
+		public bool HasNext => _pagedVacancies.Metadata.HasNext;
+
+		#endregion
+
+		public IEnumerable<Vacancy> Items => _pagedVacancies.Items;
 
 		public event Action ItemsLoaded;
 
-		public void Load(int pageNumber, int pageSize) {
+		public async Task Load(int pageNumber, int pageSize) {
 
-			// 
+			_pagedVacancies = await _hhService.GetAnalyzedVacancies(pageNumber, pageSize);
 
 			OnItemsLoaded();
+		}
+
+		public VacanciesStore(IHeadHunterAnalyzerService hhService) {
+			_hhService = hhService;
 		}
 
 		private void OnItemsLoaded() => 

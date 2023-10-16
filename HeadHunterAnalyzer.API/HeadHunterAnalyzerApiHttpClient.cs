@@ -42,6 +42,21 @@ namespace HeadHunterAnalyzer.API {
 			return json;
 		}
 
+		private PaginationMetadata TryGetPaginationMetadata(HttpResponseMessage response) {
+
+			IEnumerable<string> paginationHeaderValues;
+
+			if (!(response.Headers.TryGetValues("X-Pagination", out paginationHeaderValues) && paginationHeaderValues.Count() > 0)) {
+
+				string error = $"Данные о пагинации не были найдены. метод: {response.RequestMessage?.RequestUri}";
+
+				_logger.LogError(error);
+				throw new Exception(error);
+			}
+
+			return JsonConvert.DeserializeObject<PaginationMetadata>(paginationHeaderValues.First());
+		}
+
 		public async Task<T?> PostAsync<T>(string uri, JsonContent content) {
 
 			var response = await _client.PostAsync(uri, content);
@@ -73,20 +88,7 @@ namespace HeadHunterAnalyzer.API {
 			return PagedList<T>.ToPagedList(vacancies, metadata);
 		}
 
-		private PaginationMetadata TryGetPaginationMetadata(HttpResponseMessage response) {
-
-			IEnumerable<string> paginationHeaderValues;
-
-			if (!(response.Headers.TryGetValues("X-Pagination", out paginationHeaderValues) && paginationHeaderValues.Count() > 0)) {
-
-				string error = $"Данные о пагинации не были найдены. метод: {response.RequestMessage?.RequestUri}";
-
-				_logger.LogError(error);
-				throw new Exception(error);
-			}
-
-			return JsonConvert.DeserializeObject<PaginationMetadata>(paginationHeaderValues.First());
-		}
+		
 
 		[Obsolete]
 		private async Task<T?> DeserializeResponse<T>(HttpResponseMessage response) {

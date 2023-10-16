@@ -9,6 +9,7 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition />
+			<RowDefinition Height="30" />
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 
@@ -36,6 +37,31 @@
 
 		</ListBox>
 
+		<StackPanel 
+			Grid.Row="1"
+			Orientation="Horizontal"
+			HorizontalAlignment="Right">
+
+			<Button
+				Content="&lt;"
+				Command="{Binding LoadNextVacanciesPageCommand}"
+				Visibility="{Binding HasPrevious, 
+					Converter={StaticResource booleanToVisibilityConverter}}"/>
+			<Button 
+				Content="&gt;"
+				Command="{Binding LoadPreviousVacanciesPageCommand}"
+				Visibility="{Binding HaxNext, 
+					Converter={StaticResource booleanToVisibilityConverter}}"/>
+
+			<StackPanel.Resources>
+				<Style TargetType="Button">
+					<Setter Property="Width" Value="30" />
+					<Setter Property="Margin" Value="4 2" />
+				</Style>
+			</StackPanel.Resources>
+			
+		</StackPanel>
+		
 		<TextBlock 
 			Text="{Binding Message}"
 			Grid.Row="1"

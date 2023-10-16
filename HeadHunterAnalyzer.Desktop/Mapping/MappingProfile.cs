@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.ResponseFeatures;
 
 namespace HeadHunterAnalyzer.Desktop.Mapping {
 	
