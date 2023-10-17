@@ -11,13 +11,28 @@ namespace HeadHunterAnalyzer.Desktop.Stores.Vacancies {
 
 		private readonly IHeadHunterAnalyzerService _hhService;
 
-		private PagedList<Vacancy> _pagedVacancies = new(new List<Vacancy>(), new PaginationMetadata());
+		private PagedList<Vacancy> _pagedVacancies = new(new List<Vacancy>(), new PaginationMetadata() { TotalPages = 0 });
 
 		#region Pagination
 
-		public int PageNumber => _pagedVacancies.Metadata.CurrentPage;
+		private int _currentPage = 1;
+		public int CurrentPage {
 
-		public int PageSize => _pagedVacancies.Metadata.PageSize;
+			get => _currentPage;
+
+			set => _currentPage = value;
+		}
+
+
+		private int _pageSize = 10;
+		public int PageSize {
+
+			get => _pageSize;
+
+			set => _pageSize = value;
+		}
+
+		public int TotalPages => _pagedVacancies.Metadata.TotalPages;
 
 		public bool HasPrevious => _pagedVacancies.Metadata.HasPrevious;
 
@@ -28,13 +43,7 @@ namespace HeadHunterAnalyzer.Desktop.Stores.Vacancies {
 		public IEnumerable<Vacancy> Items => _pagedVacancies.Items;
 
 		public event Action ItemsLoaded;
-
-		public async Task Load(int pageNumber, int pageSize) {
-
-			_pagedVacancies = await _hhService.GetAnalyzedVacancies(pageNumber, pageSize);
-
-			OnItemsLoaded();
-		}
+					
 
 		public VacanciesStore(IHeadHunterAnalyzerService hhService) {
 			_hhService = hhService;
@@ -42,5 +51,41 @@ namespace HeadHunterAnalyzer.Desktop.Stores.Vacancies {
 
 		private void OnItemsLoaded() => 
 			ItemsLoaded?.Invoke();
+
+		public async Task Load() {
+
+			_pagedVacancies = await _hhService.GetAnalyzedVacancies(CurrentPage, PageSize);
+
+			CurrentPage = _pagedVacancies.Metadata.CurrentPage;
+			PageSize = _pagedVacancies.Metadata.PageSize;
+
+			OnItemsLoaded();
+		}
+
+		public async Task LoadNextPage() {
+
+			if (!HasNext)
+				return;
+
+			_pagedVacancies = await _hhService.GetAnalyzedVacancies(CurrentPage + 1, PageSize);
+
+			CurrentPage = _pagedVacancies.Metadata.CurrentPage;
+			PageSize = _pagedVacancies.Metadata.PageSize;
+
+			OnItemsLoaded();
+		}
+
+		public async Task LoadPreviousPage() {
+
+			if (!HasPrevious)
+				return;
+
+			_pagedVacancies = await _hhService.GetAnalyzedVacancies(CurrentPage - 1, PageSize);
+
+			CurrentPage = _pagedVacancies.Metadata.CurrentPage;
+			PageSize = _pagedVacancies.Metadata.PageSize;
+
+			OnItemsLoaded();
+		}
 	}
 }

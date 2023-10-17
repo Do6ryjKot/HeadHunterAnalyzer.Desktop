@@ -21,15 +21,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 		public bool HasNext => _vacanciesStore.HasNext;
 		public bool HasPrevious => _vacanciesStore.HasPrevious;
 
-		public int CurrentPage {
-
-			get => _vacanciesStore.PageNumber;
-
-			set { 
-				
-				_loadVacanciesCommand.Execute(null);
-			}
-		}
+		public string CurrentPage => String.Join(" / ", _vacanciesStore.CurrentPage, _vacanciesStore.TotalPages);
 
 		#endregion
 
@@ -52,11 +44,16 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 
 		#endregion
 
+		public ICommand LoadNextVacanciesPageCommand { get; }
+		public ICommand LoadPreviousVacanciesPageCommand { get; }
+
 		public AnalyzedVacanciesViewModel(IVacanciesStore vacanciesStore) {
 
 			_vacanciesStore = vacanciesStore;
 
-			_loadVacanciesCommand = new LoadVacanciesCommand(OnException, _vacanciesStore);
+			_loadVacanciesCommand = new LoadVacanciesCommand(OnException, vacanciesStore);
+			LoadNextVacanciesPageCommand = new LoadNextVacanciesPageCommand(OnException, vacanciesStore);
+			LoadPreviousVacanciesPageCommand = new LoadPreviousVacanciesPageCommand(OnException, vacanciesStore);
 
 			_vacanciesStore.ItemsLoaded += OnItemsLoaded;
 
@@ -68,6 +65,7 @@ namespace HeadHunterAnalyzer.Desktop.ViewModels {
 			OnPropertyChanged(nameof(Vacancies));
 			OnPropertyChanged(nameof(HasNext));
 			OnPropertyChanged(nameof(HasPrevious));
+			OnPropertyChanged(nameof(CurrentPage));
 		}
 
 		private void OnException(Exception exception) {

@@ -37,30 +37,46 @@
 
 		</ListBox>
 
-		<StackPanel 
+		<Grid 
 			Grid.Row="1"
-			Orientation="Horizontal"
+			Height="30"
 			HorizontalAlignment="Right">
 
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="40" />
+				<ColumnDefinition MinWidth="40" Width="auto" />
+				<ColumnDefinition Width="40" />
+			</Grid.ColumnDefinitions>
+			
 			<Button
+				Grid.Column="1"
 				Content="&lt;"
-				Command="{Binding LoadNextVacanciesPageCommand}"
+				Command="{Binding LoadPreviousVacanciesPageCommand}"
 				Visibility="{Binding HasPrevious, 
 					Converter={StaticResource booleanToVisibilityConverter}}"/>
+
+			<TextBlock
+				Grid.Column="2"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Center"
+				Text="{Binding CurrentPage}" />
+
 			<Button 
+				Grid.Column="3"
 				Content="&gt;"
-				Command="{Binding LoadPreviousVacanciesPageCommand}"
-				Visibility="{Binding HaxNext, 
+				Command="{Binding LoadNextVacanciesPageCommand}"
+				Visibility="{Binding HasNext, 
 					Converter={StaticResource booleanToVisibilityConverter}}"/>
 
-			<StackPanel.Resources>
+			<Grid.Resources>
 				<Style TargetType="Button">
 					<Setter Property="Width" Value="30" />
 					<Setter Property="Margin" Value="4 2" />
 				</Style>
-			</StackPanel.Resources>
+			</Grid.Resources>
 			
-		</StackPanel>
+		</Grid>
 		
 		<TextBlock 
 			Text="{Binding Message}"

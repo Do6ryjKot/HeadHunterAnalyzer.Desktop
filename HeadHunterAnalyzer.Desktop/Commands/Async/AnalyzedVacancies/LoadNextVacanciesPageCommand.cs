@@ -5,21 +5,19 @@ using System.Threading.Tasks;
 namespace HeadHunterAnalyzer.Desktop.Commands.Async.AnalyzedVacancies {
 
 	/// <summary>
-	/// Команда загрузки вакансий на странице анализировнаных вакансий.
+	/// Команда загрузки след. страницы вакансий.
 	/// </summary>
-	public class LoadVacanciesCommand : AsyncCommandBase {
+	public class LoadNextVacanciesPageCommand : AsyncCommandBase {
 
 		private readonly IVacanciesStore _vacanciesStore;
 
-		public LoadVacanciesCommand(Action<Exception> onException, 
-				IVacanciesStore vacanciesStore) : base(onException) {
-
+		public LoadNextVacanciesPageCommand(Action<Exception> onError, IVacanciesStore vacanciesStore) : base(onError) {
 			_vacanciesStore = vacanciesStore;
 		}
 
 		public override async Task ExecuteAsync(object? parameter) {
 
-			await _vacanciesStore.Load();
+			await _vacanciesStore.LoadNextPage();
 		}
 	}
 }
