@@ -24,19 +24,58 @@
 				<DataTemplate>
 					<Grid Height="auto">
 
+						<Grid.RowDefinitions>
+							<RowDefinition Height="auto" />
+							<RowDefinition Height="auto" />
+						</Grid.RowDefinitions>
+						
+						<!-- Название вакансии -->
 						<TextBlock
-							MinHeight="50"
+							MinHeight="20"
 							Height="auto"
 							Margin="5"
 							TextWrapping="Wrap"
 							Text="{Binding Name}" />
 
+						<!-- Набор слов вакансии -->
+						<ListBox
+							Height="auto"
+							ItemsSource="{Binding Words}"
+							BorderThickness="0"
+							Background="Transparent"
+							ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+							Grid.Row="1">
+
+							<ListBox.ItemsPanel>
+								<ItemsPanelTemplate>
+									<WrapPanel />
+								</ItemsPanelTemplate>
+							</ListBox.ItemsPanel>
+
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<Border 
+										BorderBrush="Black"
+										CornerRadius="3"
+										BorderThickness="1"
+										MinWidth="20"
+										Padding="5 2">
+										<TextBlock
+											HorizontalAlignment="Center"
+											VerticalAlignment="Center"
+											Text="{Binding Value}" />
+									</Border>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+						
 					</Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 
 		</ListBox>
 
+		<!-- Элемент для пагинации -->
 		<Grid 
 			Grid.Row="1"
 			Height="30"
@@ -49,6 +88,7 @@
 				<ColumnDefinition Width="40" />
 			</Grid.ColumnDefinitions>
 			
+			<!-- Кнопка перехода на пред. страницу -->
 			<Button
 				Grid.Column="1"
 				Content="&lt;"
@@ -56,12 +96,14 @@
 				Visibility="{Binding HasPrevious, 
 					Converter={StaticResource booleanToVisibilityConverter}}"/>
 
+			<!-- Индикатор страниц -->
 			<TextBlock
 				Grid.Column="2"
 				VerticalAlignment="Center"
 				HorizontalAlignment="Center"
 				Text="{Binding CurrentPage}" />
 
+			<!-- Кнопка перехода на след. страницу -->
 			<Button 
 				Grid.Column="3"
 				Content="&gt;"
@@ -78,6 +120,7 @@
 			
 		</Grid>
 		
+		<!-- Вывод сообщений -->
 		<TextBlock 
 			Text="{Binding Message}"
 			Grid.Row="1"
